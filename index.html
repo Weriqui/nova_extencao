@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadência de Prospecção</title>
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Seus scripts -->
+  <script src="novojs.js" defer></script> 
+  <link rel="stylesheet" href="novo_stile.css">
+</head>
+
+<body
+  class="
+    min-h-screen
+    max-h-screen
+    grid
+    grid-cols-[16rem_1fr]
+    grid-rows-[4rem_1fr]
+    [grid-template-areas:'sidebar_topbar''sidebar_main']
+  "
+>
+  <!-- Sidebar -->
+  <aside class="[grid-area:sidebar] bg-[#0F2747] text-white w-64 flex flex-col">
+    <!-- Logo topo -->
+    <div class="flex items-center justify-center h-16 border-b border-[#009BB6]">
+      <!-- Pode usar um SVG ou texto -->
+      <p id="logo_extencao" class="text-2xl font-bold">Prime</p>
+      <!-- Ou um texto da sua marca -->
+      <!-- <span class="font-bold text-xl ml-2">Marca</span> -->
+    </div>
+
+    <!-- Navegação principal -->
+    <nav class="flex-1 px-4 py-6 overflow-y-auto">
+        <h3 class="text-base font-bold uppercase tracking-wide text-white mb-2">
+            CADÊNCIA DE PROSPECÇÃO
+        </h3>
+      <ul class="space-y-2">
+        <!-- Item 1 -->
+        <li id="step1">
+          <a href="#"
+             class="flex items-center px-3 py-2 rounded-md hover:bg-[#009BB6] focus:bg-[#009BB6] transition">
+            <!-- Ícone: Exemplo com Heroicons “home” -->
+            <span class="inline-flex items-center justify-center h-7 w-7 rounded-full bg-[#009BB6] text-white text-xs font-bold">SL</span>
+            <span class="ml-3 font-medium">SCRIPT LIGAÇÃO</span>
+            <!-- Exemplo de badge -->
+          </a>
+        </li>
+        <li id="step2">
+          <a href="#"
+             class="flex items-center px-3 py-2 rounded-md hover:bg-[#009BB6] focus:bg-[#009BB6] transition">
+            <!-- Ícone: Exemplo com Heroicons “home” -->
+            <span class="inline-flex items-center justify-center h-7 w-7 rounded-full bg-[#009BB6] text-white text-xs font-bold">PC</span>
+            <span class="ml-3 font-medium">OPORTUNIDADE</span>
+            <!-- Exemplo de badge -->
+          </a>
+        </li>
+        <li id="step3">
+          <a href="#"
+             class="flex items-center px-3 py-2 rounded-md hover:bg-[#009BB6] focus:bg-[#009BB6] transition">
+            <!-- Ícone: Exemplo com Heroicons “home” -->
+            <span class="inline-flex items-center justify-center h-7 w-7 rounded-full bg-[#009BB6] text-white text-xs font-bold">T</span>
+            <span class="ml-3 font-medium">TENTATIVA</span>
+            <!-- Exemplo de badge -->
+          </a>
+        </li>
+        <li id="step4">
+          <a href="#"
+             class="flex items-center px-3 py-2 rounded-md hover:bg-[#009BB6] focus:bg-[#009BB6] transition">
+            <!-- Ícone: Exemplo com Heroicons “home” -->
+            <span class="inline-flex items-center justify-center h-7 w-7 rounded-full bg-[#009BB6] text-white text-xs font-bold">F</span>
+            <span class="ml-3 font-medium">CONTATO EFETIVO</span>
+            <!-- Exemplo de badge -->
+          </a>
+        </li>
+        <li id="step5">
+          <a href="#"
+             class="flex items-center px-3 py-2 rounded-md hover:bg-[#009BB6] focus:bg-[#009BB6] transition">
+            <!-- Ícone: Exemplo com Heroicons “home” -->
+            <span class="inline-flex items-center justify-center h-7 w-7 rounded-full bg-[#009BB6] text-white text-xs font-bold">R</span>
+            <span class="ml-3 font-medium">AGENDANDO</span>
+            <!-- Exemplo de badge -->
+          </a>
+        </li>
+        <li id="step6">
+          <a href="#"
+             class="flex items-center px-3 py-2 rounded-md hover:bg-[#009BB6] focus:bg-[#009BB6] transition">
+            <!-- Ícone: Exemplo com Heroicons “home” -->
+            <span class="inline-flex items-center justify-center h-7 w-7 rounded-full bg-[#009BB6] text-white text-xs font-bold">OB</span>
+            <span class="ml-3 font-medium">OBJEÇÕES</span>
+            <!-- Exemplo de badge -->
+          </a>
+        </li>
+
+      </ul>
+
+      <!-- Separador “Your teams” -->
+      <div class="mt-6 pt-6 border-t border-[#009BB6]">
+        <h3 class="text-base font-bold uppercase tracking-wide text-white mb-2">
+          FERRAMENTAS
+        </h3>
+        <ul class="space-y-2">
+          <li id="step7">
+            <a href="#"
+               class="flex items-center px-3 py-2 rounded-md hover:bg-[#009BB6] transition">
+              <!-- Fake “Avatar” com inicial H -->
+              <div class="h-5 w-5 flex items-center justify-center rounded-full bg-[#009BB6] text-white text-xs">
+                C
+              </div>
+              <span class="ml-3 font-medium">CRIAR NEGÓCIO CALLIX</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- TOPBAR fixo, mas só a partir da largura da sidebar -->
+  <header class="[grid-area:topbar]  bg-white shadow flex items-center justify-center px-4 z-10">
+    <!-- Inputs ou selects do topo (funil, produto) -->
+    <div class="flex items-center gap-3">
+      <select id="etapa-funil" class="border border-gray-300 rounded px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+            <option>PROSPECÇÃO</option>
+            <option>NEGOCIAÇÃO</option>
+            <option>EXECUÇÃO</option>
+            <option>REPESCAGEM</option>
+      </select>
+      <select name="produto" class="produto border border-gray-300 rounded px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+            <option>Selecione o Produto</option>
+      </select>
+    </div>
+    <!-- Título ou algo à direita -->
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <main class="[grid-area:main] overflow-y-auto flex-1 p-6">
+    <div id="prospect" class="etapa">
+        <div class="conteudo">
+            <section id="etapa-1" class="step-content hidden">
+                <div class="bg-white rounded-lg shadow p-6 space-y-4">
+                    <h2 class="text-2xl font-bold text-gray-800">SCRIPT LIGAÇÃO</h2>
+                
+                    <!-- blocos que podem ser copiados -->
+                    <p id="SCRIPT-LIGACAO1"
+                        class="cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100">
+                        Clique para copiar o texto 1…
+                    </p>
+                
+                    <p id="SCRIPT-LIGACAO2"
+                        class="cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100">
+                        Clique para copiar o texto 2…
+                    </p>
+                
+                    <a href="GRUPO VILLELA - INSTITUCIONAL.pdf" download
+                        class="inline-block text-blue-600 hover:underline text-sm font-medium">
+                        📄 Baixar material institucional
+                    </a>
+                </div>
+              </section>
+              <section id="etapa-2" class="step-content hidden">
+                <div class="bg-white rounded-lg shadow p-6">
+                  <h2 class="text-2xl font-bold text-gray-800 mb-6">OPORTUNIDADE</h2>
+          
+                  <article class="mb-8">
+                    <header class="flex items-center gap-2 mb-2">
+                      <span class="inline-flex items-center justify-center h-7 w-7 rounded-full bg-[#009BB6] text-white text-[10px] font-bold">OP</span>
+                      <h3 class="font-semibold text-gray-700">
+                        Ligar e abordar pelo script de ligação
+                      </h3>
+                    </header>
+          
+                    <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                      <li><strong>Prazo:</strong> mesmo dia em que receber o negócio</li>
+          
+                      <li><span class="font-semibold text-gray-700">ATENDEU</span> - mover para
+                          <em>Contato Efetivo</em></li>
+          
+                      <li><span class="font-semibold text-gray-700">NÃO ATENDEU</span> - enviar
+                          mensagem pelo Whats e mover para <em>Tentativa</em></li>
+                    </ul>
+                  </article>
+                </div>
+              </section>
+            <section id="etapa-3" class="step-content hidden">
+                <h1>TENTATIVA</h1>
+                <article class="mb-8">
+                    <header class="flex items-center gap-2 mb-2">
+                      <span
+                        class="inline-flex items-center justify-center h-7 w-7 rounded-full
+                               bg-[#009BB6] text-white text-xs font-bold">T1</span>
+                      <h3 class="font-semibold text-gray-700">Enviar mensagem WhatsApp</h3>
+                    </header>
+          
+                    <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                      <li><strong>Prazo:</strong> mesmo dia em que receber o negócio</li>
+                      <li>Agendar T2 para o dia seguinte</li>
+                    </ul>
+          
+                    <p id="T1" class="mt-3 cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100" title="Clique para copiar"></p>
+                </article>
+    
+                <article class="mb-8">
+                    <header class="flex items-center gap-2 mb-2">
+                      <span class="inline-flex items-center justify-center h-7 w-7 rounded-full bg-[#009BB6] text-white text-xs font-bold">T2</span>
+                      <h3 class="font-semibold text-gray-700">Ligar (Callix) ou Whats</h3>
+                    </header>
+          
+                    <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                      <li>Se não atender, enviar mensagem WhatsApp</li>
+                      <li>Agendar T3 para o dia seguinte (turno trocado)</li>
+                    </ul>
+          
+                    <p id="T2" class="mt-3 cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100" title="Clique para copiar"></p>
+                </article>
+    
+                <!-- T3 --------------------------------------------------------->
+                <article class="mb-8">
+                    <header class="flex items-center gap-2 mb-2">
+                        <span class="inline-flex items-center justify-center h-7 w-7 rounded-full
+                            bg-[#009BB6] text-white text-xs font-bold">T3</span>
+                        <h3 class="font-semibold text-gray-700"> Ligar (Callix); se não atender, enviar mensagem WhatsApp </h3>
+                    </header>
+                    <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                        <li>Agendar T4 para 2 dias depois</li>
+                    </ul>
+                    <p id="T3" class="mt-3 cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100" title="Clique para copiar"></p>
+                </article>
+                <!-- T4 --------------------------------------------------------->
+                <article class="mb-8">
+                    <header class="flex items-center gap-2 mb-2">
+                        <span class="inline-flex items-center justify-center h-7 w-7 rounded-full
+                            bg-[#009BB6] text-white text-xs font-bold">T4</span>
+                        <h3 class="font-semibold text-gray-700"> Ligar na empresa para falar com o sócio ou responsável financeiro </h3>
+                    </header>
+                    <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                        <li>Pegar e-mail e inserir no negócio</li>
+                        <li>Agendar T5 para o dia seguinte</li>
+                    </ul>
+                    <p id="T4" class="mt-3 cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100" title="Clique para copiar"></p>
+                </article>
+                <!-- T5 --------------------------------------------------------->
+                <article class="mb-8">
+                    <header class="flex items-center gap-2 mb-2">
+                        <span class="inline-flex items-center justify-center h-7 w-7 rounded-full
+                            bg-[#009BB6] text-white text-xs font-bold">T5</span>
+                        <h3 class="font-semibold text-gray-700">Enviar e-mail para a empresa</h3>
+                    </header>
+                    <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                        <li>Agendar T6 para 3 dias depois</li>
+                    </ul>
+                    <p id="T5" class="mt-3 cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100" title="Clique para copiar"></p>
+                </article>
+                <!-- T6 --------------------------------------------------------->
+                <article class="mb-8">
+                    <header class="flex items-center gap-2 mb-2">
+                        <span class="inline-flex items-center justify-center h-7 w-7 rounded-full
+                            bg-[#009BB6] text-white text-xs font-bold">T6</span>
+                        <h3 class="font-semibold text-gray-700"> Ligar na empresa para agendar com o responsável financeiro </h3>
+                    </header>
+                    <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                        <li>Agendar T7 para 4 dias depois (turno trocado)</li>
+                    </ul>
+                    <p id="T6" class="mt-3 cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100" title="Clique para copiar"></p>
+                </article>
+                <!-- T7 --------------------------------------------------------->
+                <article class="mb-8">
+                    <header class="flex items-center gap-2 mb-2">
+                        <span class="inline-flex items-center justify-center h-7 w-7 rounded-full
+                            bg-[#009BB6] text-white text-xs font-bold">T7</span>
+                        <h3 class="font-semibold text-gray-700"> Última tentativa de contato </h3>
+                    </header>
+                    <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                        <li>Ligar na empresa, procurar sócio ou responsável financeiro</li>
+                        <li>Se não conseguir contato, enviar e-mail e mensagem WhatsApp</li>
+                        <li>Dar <strong>perdido</strong> e qualificar o motivo; se houver retorno, reabrir negócio, qualificar e avançar no funil </li>
+                    </ul>
+                    <p id="T7" class="mt-3 cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100" title="Clique para copiar"></p>
+                </article>
+            </section>
+            <section id="etapa-4" class="step-content hidden">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">CONTATO EFETIVO</h2>
+                    <!-- F1 --------------------------------------------------------->
+                    <article class="mb-8">
+                        <header class="flex items-center gap-2 mb-2">
+                            <span class="inline-flex items-center justify-center h-7 w-7 rounded-full
+                             bg-[#009BB6] text-white text-xs font-bold">F1</span>
+                            <h3 class="font-semibold text-gray-700"> Ligar (Callix/Whats) + mensagem WhatsApp </h3>
+                        </header>
+                        <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                            <li>Data marcada ou 1 dia após contato efetivo</li>
+                            <li>Agendar F2 para 1 dia depois</li>
+                        </ul>
+                        <p id="F1" class="mt-3 cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100" title="Clique para copiar"></p>
+                    </article>
+                    <!-- F2 --------------------------------------------------------->
+                    <article class="mb-8">
+                        <header class="flex items-center gap-2 mb-2">
+                            <span class="inline-flex items-center justify-center h-7 w-7 rounded-full
+                             bg-[#009BB6] text-white text-xs font-bold">F2</span>
+                            <h3 class="font-semibold text-gray-700"> Mensagem WhatsApp — depoimento de cliente </h3>
+                        </header>
+                        <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                            <li>Agendar F3 para 2 dias depois</li>
+                        </ul>
+                        <p id="F2" class="mt-3 cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100" title="Clique para copiar"></p>
+                        <a href="depoimento.mp4" download class="inline-block mt-2 text-blue-600 hover:underline text-sm font-medium"> 📄 Baixar depoimento de cliente (F2) </a>
+                    </article>
+                    <!-- F3 --------------------------------------------------------->
+                    <article class="mb-8">
+                        <header class="flex items-center gap-2 mb-2">
+                            <span class="inline-flex items-center justify-center h-7 w-7 rounded-full
+                             bg-[#009BB6] text-white text-xs font-bold">F3</span>
+                            <h3 class="font-semibold text-gray-700"> Ligar (Callix/Whats) + mensagem WhatsApp </h3>
+                        </header>
+                        <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                            <li>Agendar F4 para 3 dias depois</li>
+                        </ul>
+                        <p id="F3" class="mt-3 cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100" title="Clique para copiar"></p>
+                    </article>
+                    <!-- F4 --------------------------------------------------------->
+                    <article class="mb-8">
+                        <header class="flex items-center gap-2 mb-2">
+                            <span class="inline-flex items-center justify-center h-7 w-7 rounded-full
+                             bg-[#009BB6] text-white text-xs font-bold">F4</span>
+                            <h3 class="font-semibold text-gray-700"> Ligar para o responsável financeiro </h3>
+                        </header>
+                        <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                            <li>Colher e-mail</li>
+                            <li>Agendar F5 para 1 dia depois</li>
+                        </ul>
+                        <p id="F4" class="mt-3 cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100" title="Clique para copiar"></p>
+                    </article>
+                    <!-- F5 --------------------------------------------------------->
+                    <article class="mb-8">
+                        <header class="flex items-center gap-2 mb-2">
+                            <span class="inline-flex items-center justify-center h-7 w-7 rounded-full
+                             bg-[#009BB6] text-white text-xs font-bold">F5</span>
+                            <h3 class="font-semibold text-gray-700">E-mail de prospecção</h3>
+                        </header>
+                        <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                            <li>Agendar F6 para 3 dias depois</li>
+                        </ul>
+                        <p id="F5" class="mt-3 cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100" title="Clique para copiar"></p>
+                    </article>
+                    <!-- F6 --------------------------------------------------------->
+                    <article class="mb-8">
+                        <header class="flex items-center gap-2 mb-2">
+                            <span class="inline-flex items-center justify-center h-7 w-7 rounded-full
+                             bg-[#009BB6] text-white text-xs font-bold">F6</span>
+                            <h3 class="font-semibold text-gray-700">E-mail — conteúdo informativo</h3>
+                        </header>
+                        <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                            <li>Agendar F7 para 2 dias depois</li>
+                        </ul>
+                        <p id="F6" class="mt-3 cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100" title="Clique para copiar"></p>
+                    </article>
+                    <!-- F7 --------------------------------------------------------->
+                    <article class="mb-8">
+                        <header class="flex items-center gap-2 mb-2">
+                            <span class="inline-flex items-center justify-center h-7 w-7 rounded-full
+                             bg-[#009BB6] text-white text-xs font-bold">F7</span>
+                            <h3 class="font-semibold text-gray-700"> Mensagem WhatsApp — case de sucesso 1 </h3>
+                        </header>
+                        <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                            <li>Agendar F8 para 3 dias depois</li>
+                        </ul>
+                        <p id="F7" class="mt-3 cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100" title="Clique para copiar"></p>
+                        <a href="case f7.jpeg" download class="inline-block mt-2 text-blue-600 hover:underline text-sm font-medium"> 📄 Baixar case de sucesso 1 (F7) </a>
+                    </article>
+                    <!-- F8 --------------------------------------------------------->
+                    <article class="mb-8">
+                        <header class="flex items-center gap-2 mb-2">
+                            <span class="inline-flex items-center justify-center h-7 w-7 rounded-full
+                             bg-[#009BB6] text-white text-xs font-bold">F8</span>
+                            <h3 class="font-semibold text-gray-700"> Ligar e agendar reunião com sócio ou resp. financeiro </h3>
+                        </header>
+                        <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                            <li>Agendar F9 para 2 dias depois</li>
+                        </ul>
+                        <p id="F8" class="mt-3 cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100" title="Clique para copiar"></p>
+                    </article>
+                    <!-- F9 --------------------------------------------------------->
+                    <article class="mb-8">
+                        <header class="flex items-center gap-2 mb-2">
+                            <span class="inline-flex items-center justify-center h-7 w-7 rounded-full
+                             bg-[#009BB6] text-white text-xs font-bold">F9</span>
+                            <h3 class="font-semibold text-gray-700"> WhatsApp — notícia relevante com follow-up </h3>
+                        </header>
+                        <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                            <li>Agendar F10 para 3 dias depois</li>
+                        </ul>
+                        <p id="F9" class="mt-3 cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100" title="Clique para copiar"></p>
+                        <a href="notica f9.jpeg" download class="inline-block mt-2 text-blue-600 hover:underline text-sm font-medium"> 📄 Baixar notícia relevante (F9) </a>
+                    </article>
+                    <!-- F10 -------------------------------------------------------->
+                    <article class="mb-8">
+                        <header class="flex items-center gap-2 mb-2">
+                            <span class="inline-flex items-center justify-center h-7 w-7 rounded-full
+                             bg-[#009BB6] text-white text-xs font-bold">F10</span>
+                            <h3 class="font-semibold text-gray-700"> Ligar (Callix/Whats) + mensagem WhatsApp </h3>
+                        </header>
+                        <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                            <li>Agendar F11 para 3 dias depois</li>
+                        </ul>
+                        <p id="F10" class="mt-3 cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100" title="Clique para copiar"></p>
+                    </article>
+                    <!-- F11 -------------------------------------------------------->
+                    <article class="mb-8">
+                        <header class="flex items-center gap-2 mb-2">
+                            <span class="inline-flex items-center justify-center h-7 w-7 rounded-full
+                             bg-[#009BB6] text-white text-xs font-bold">F11</span>
+                            <h3 class="font-semibold text-gray-700"> Mensagem WhatsApp — case de sucesso 2 </h3>
+                        </header>
+                        <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                            <li>Agendar F12 para 4 dias depois</li>
+                        </ul>
+                        <p id="F11" class="mt-3 cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100" title="Clique para copiar"></p>
+                        <a href="noticia f11.jpeg" download class="inline-block mt-2 text-blue-600 hover:underline text-sm font-medium"> 📄 Baixar notícia relevante (F11) </a>
+                    </article>
+                    <!-- F12 -------------------------------------------------------->
+                    <article class="mb-8">
+                        <header class="flex items-center gap-2 mb-2">
+                            <span class="inline-flex items-center justify-center h-7 w-7 rounded-full
+                             bg-[#009BB6] text-white text-xs font-bold">F12</span>
+                            <h3 class="font-semibold text-gray-700">Break-up</h3>
+                        </header>
+                        <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                            <li>Ligar (Callix/Whats) + mensagem WhatsApp</li>
+                            <li>Dar <strong>perdido</strong> e qualificar o motivo da perda </li>
+                            <li>Se houver retorno, reabrir negócio, qualificar e avançar no funil</li>
+                        </ul>
+                        <p id="F12" class="mt-3 cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100" title="Clique para copiar"></p>
+                    </article>
+                </div>
+            </section>
+            <section id="etapa-5" class="step-content hidden">
+                <div class="bg-white rounded-lg shadow p-6 space-y-6">
+                    <h1 class="text-2xl font-bold text-gray-800">AGENDADO</h1>
+                    <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                        <li>Agendar para no máximo 48h</li>
+                        <li>Gatilho de compromisso: "Se tiver algum imprevisto e não puder participar, pode me ligar e avisar"</li>
+                        <li>Criar atividade <strong>Agendado</strong>: definir data e horário, criar link de reunião e enviar invite para o e-mail do prospect </li>
+                    </ul>
+                    <!-- Atividade C1 -->
+                    <article class="mb-6">
+                        <header class="flex items-center gap-2 mb-2">
+                            <span class="inline-flex items-center justify-center h-7 w-7 rounded-full bg-[#009BB6] text-white text-xs font-bold">C1</span>
+                            <h3 class="font-semibold text-gray-700">Ações imediatas pós-reunião</h3>
+                        </header>
+                        <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                            <li>
+                                <strong>Quando?</strong> Imediatamente após a reunião
+                            </li>
+                            <li>Pegar e-mail e enviar invite</li>
+                            <li>Enviar mensagem Whats com data, horário, material institucional e link “Unidades Grupo Villela”</li>
+                        </ul>
+                        <p id="C1" class="mt-3 cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100" title="Clique para copiar"></p>
+                        <a href="GRUPO VILLELA - INSTITUCIONAL.pdf" download="GRUPO VILLELA - INSTITUCIONAL.pdf" class="inline-block mt-2 text-blue-600 hover:underline text-sm font-medium"> 📄 Baixar material informativo (Atividade C1) </a>
+                    </article>
+                    <!-- Atividade C2 -->
+                    <article class="mb-6">
+                        <header class="flex items-center gap-2 mb-2">
+                            <span class="inline-flex items-center justify-center h-7 w-7 rounded-full bg-[#009BB6] text-white text-xs font-bold">C2</span>
+                        </header>
+                        <ul class="list-disc list-inside text-sm text-gray-600">
+                            <li>
+                                <h4>Quando? As 16:45 do dia anterior à reunião</h4>
+                            </li>
+                        </ul>
+                        <p id="C2" class="mt-3 cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100" title="Clique para copiar"></p>
+                    </article>
+                    <!-- Atividade C3 -->
+                    <article class="mb-6">
+                        <header class="flex items-center gap-2 mb-2">
+                            <span class="inline-flex items-center justify-center h-7 w-7 rounded-full bg-[#009BB6] text-white text-xs font-bold">C3</span>
+                        </header>
+                        <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                            <li>
+                                <h4>Quando? 9h do dia da reunião</h4>
+                            </li>
+                            <li>
+                                <h4>Enviar link da reunião pelo WhatsApp</h4>
+                            </li>
+                        </ul>
+                        <p id="C3" class="mt-3 cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100" title="Clique para copiar"></p>
+                    </article>
+                    <!-- Atividade REMARCADA -->
+                    <article class="mb-6">
+                        <header class="flex items-center gap-2 mb-2">
+                            <span class="inline-flex items-center justify-center h-7 w-7 rounded-full bg-[#009BB6] text-white text-xs font-bold">REMARCADA</span>
+                        </header>
+                        <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                            <li>
+                                <h4>Pode ocorrer antes ou depois do horário da reunião, desde que o prospect responda e proponha ou aceite remarcar, no prazo de 24h</h4>
+                            </li>
+                            <li>
+                                <h4>Alterar dia e horário na agenda</h4>
+                            </li>
+                            <li>
+                                <h4>Criar atividade remarcada (obrigatório)</h4>
+                            </li>
+                        </ul>
+                    </article>
+                    <!-- Atividade NS1 (ESQUECEU) -->
+                    <article class="mb-6">
+                        <header class="flex items-center gap-2 mb-2">
+                            <span class="inline-flex items-center justify-center h-7 w-7 rounded-full bg-[#009BB6] text-white text-xs font-bold">NS1</span>
+                        </header>
+                        <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                            <li>
+                                <h4>Não é necessário criar atividade, pois a atividade Agendado será alterada para NS1 automaticamente após 24h</h4>
+                            </li>
+                            <li>
+                                <h4>Quando? Um dia após o "no show"</h4>
+                            </li>
+                            <li>
+                                <h4>Ligar; se não atender, enviar mensagem</h4>
+                            </li>
+                            <li>
+                                <h4>Agendar NS2 para 2 dias depois</h4>
+                            </li>
+                        </ul>
+                        <p id="NS1" class="mt-3 cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100" title="Clique para copiar"></p>
+                    </article>
+                    <!-- Atividade NS2 (ALTA DE TEMPO) -->
+                    <article class="mb-6">
+                        <header class="flex items-center gap-2 mb-2">
+                            <span class="inline-flex items-center justify-center h-7 w-7 rounded-full bg-[#009BB6] text-white text-xs font-bold">NS2</span>
+                        </header>
+                        <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                            <li>
+                                <h4>Enviar e-mail</h4>
+                            </li>
+                            <li>
+                                <h4>Agendar NS3 para 4 dias depois</h4>
+                            </li>
+                        </ul>
+                        <p id="NS2" class="mt-3 cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100" title="Clique para copiar"></p>
+                    </article>
+                    <!-- Atividade NS3 (ALTA DE CONSCIÊNCIA ACERCA DO PROBLEMA) -->
+                    <article class="mb-6">
+                        <header class="flex items-center gap-2 mb-2">
+                            <span class="inline-flex items-center justify-center h-7 w-7 rounded-full bg-[#009BB6] text-white text-xs font-bold">NS3</span>
+                        </header>
+                        <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                            <li>
+                                <h4>Enviar mensagem</h4>
+                            </li>
+                            <li>
+                                <h4>Agendar NS4 para 3 dias depois</h4>
+                            </li>
+                        </ul>
+                        <p id="NS3" class="mt-3 cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100" title="Clique para copiar"></p>
+                    </article>
+                    <!-- Atividade NS4 (DESCONFIANÇA) -->
+                    <article class="mb-6">
+                        <header class="flex items-center gap-2 mb-2">
+                            <span class="inline-flex items-center justify-center h-7 w-7 rounded-full bg-[#009BB6] text-white text-xs font-bold">NS4</span>
+                        </header>
+                        <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                            <li>
+                                <h4>Ligar e enviar mensagem</h4>
+                            </li>
+                            <li>
+                                <h4>Agendar NS5 para 4 dias depois</h4>
+                            </li>
+                        </ul>
+                        <p id="NS4" class="mt-3 cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100" title="Clique para copiar"></p>
+                    </article>
+                    <!-- Atividade NS5 (IMPEDIMENTO PELO CONTADOR OU ADVOGADO) -->
+                    <article class="mb-6">
+                        <header class="flex items-center gap-2 mb-2">
+                            <span class="inline-flex items-center justify-center h-7 w-7 rounded-full bg-[#009BB6] text-white text-xs font-bold">NS5</span>
+                        </header>
+                        <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                            <li>
+                                <h4>Enviar mensagem</h4>
+                            </li>
+                            <li>
+                                <h4>Agendar NS5 para 7 dias depois e atribuir ao closer da reunião</h4>
+                            </li>
+                        </ul>
+                        <p id="NS5" class="mt-3 cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100" title="Clique para copiar"></p>
+                    </article>
+                    <!-- Atividade NS6 (LOSER) -->
+                    <article class="mb-6">
+                        <header class="flex items-center gap-2 mb-2">
+                            <span class="inline-flex items-center justify-center h-7 w-7 rounded-full bg-[#009BB6] text-white text-xs font-bold">NS6</span>
+                        </header>
+                        <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+                            <li>
+                                <h4>Closer: ligar para retomar negócio com abordagem personalizada</h4>
+                            </li>
+                            <li>
+                                <h4>Caso não consiga contato, enviar mensagem e dar perdido. Se houver retorno, reabrir negócio e solicitar ao pré-vendedor que remarque conforme</h4>
+                            </li>
+                        </ul>
+                    </article>
+                </div>
+            </section>
+            <section id="etapa-6" class="step-content hidden">
+                <div class="bg-white rounded-lg shadow p-6 space-y-6">
+                    <h2 class="text-2xl font-bold text-gray-800">OBJEÇÕES</h2>
+                    <div>
+                        <h3 class="font-semibold text-gray-700 mb-1">Como conseguiu meu número?</h3>
+                        <p id="OBJECAO-1" class="cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100" title="Clique para copiar"></p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-700 mb-1">Minha contabilidade/jurídico já faz</h3>
+                        <p id="OBJECAO-2" class="cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100" title="Clique para copiar"></p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-gray-700 mb-1">Não tem interesse</h3>
+                        <p id="OBJECAO-3" class="cursor-pointer bg-gray-50 border border-gray-200 rounded-md p-4 text-sm hover:bg-gray-100" title="Clique para copiar"></p>
+                    </div>
+                </div>
+            </section>
+            <section id="etapa-7" class="step-content hidden">
+                <div class="bg-white rounded-lg shadow p-6 space-y-6">
+                    <h2 class="text-2xl font-bold text-gray-800">Criar negócio Callix</h2>
+                    <div class="flex flex-col sm:flex-row sm:items-end gap-3">
+                        <input type="search" id="pesquisa_telefone" class="flex-1 border border-gray-300 rounded px-3 py-2 text-sm
+                                    focus:outline-none focus:ring-1 focus:ring-blue-500" placeholder="Telefone / CNPJ">
+                        <button id="consulta_telefone" class="px-4 py-2 bg-[#009BB6] text-white rounded
+                                     hover:bg-indigo-700 text-sm"> Consultar </button>
+                    </div>
+                    <!-- diálogo/modal será controlado via JS -->
+                    <dialog class="rounded-lg shadow-lg p-6"></dialog>
+                    <div id="dados-deal" class="hidden space-y-2">
+                        <h3 class="font-semibold">Cliente</h3>
+                        <p id="nome_da_pessoa"></p>
+                        <h3 class="font-semibold">Telefone</h3>
+                        <p id="telefone_da_pessoa"></p>
+                        <h3 class="font-semibold">Empresa</h3>
+                        <p id="empresa_da_pessoa"></p>
+                        <h3 class="font-semibold">Assessor</h3>
+                        <select id="Agente" class="border border-gray-300 rounded px-3 py-2 text-sm
+                                     focus:outline-none focus:ring-1 focus:ring-blue-500"></select>
+                        <button id="transfere_negocio" class="px-4 py-2 bg-[#009BB6] text-white rounded
+                                     hover:bg-indigo-700 text-sm"> Obter negócio </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+  </main>
+</body>
+</html>

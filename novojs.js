@@ -846,7 +846,7 @@ document.addEventListener('DOMContentLoaded', async function() {
           fetchProductData(numero_produto, parseInt(document.querySelectorAll('.step-content:not(.hidden)')[0].id.split('-')[1]));
         });
       });
-      d
+
       handleEtapaChange(document.querySelector('#etapa-funil'));
       tamanhoPagina();
     })();

@@ -10,234 +10,7 @@ function waitForElement(selector, callback) {
 }
 
 // Exemplo de uso: Espera o elemento "#transfere_negocio"
-waitForElement("#transfere_negocio", (element) => {
-  console.log('Elemento encontrado:', element);
 
-  (function initApp() {
-    // Funções de busca e manipulação:
-    busca_produto();
-    busca_usuarios();
-
-    const produto = document.querySelectorAll('.produto');
-    const SelectsDeEtapa = document.querySelectorAll('#etapa-funil');
-    const etapas = document.querySelectorAll('.etapa');
-    const sections = {
-      'PROSPECÇÃO': 'prospect',
-      'NEGOCIAÇÃO': 'deal',
-      'EXECUÇÃO': 'execut',
-      'REPESCAGEM': 'repesca'
-    };
-
-    // Função para tratar a mudança da etapa
-    function handleEtapaChange(etapaSelect) {
-      // Caso o evento seja de input, obtenha o currentTarget
-      if (etapaSelect instanceof Event) {
-        etapaSelect = etapaSelect.currentTarget;
-      }
-      // Esconde todas as seções
-      Object.values(sections).forEach(sectionId => {
-        const section = document.getElementById(sectionId);
-        if (section) section.classList.remove('visivel');
-      });
-
-      // Obtém o valor selecionado e o valor do produto no mesmo pai
-      const selectedValue = etapaSelect.value;
-      const valorProduto = etapaSelect.parentElement.querySelector('.produto').value;
-      SelectsDeEtapa.forEach(selectElem => {
-        selectElem.value = selectedValue;
-        selectElem.parentElement.querySelector('.produto').value = valorProduto;
-      });
-
-      // Mostra a seção correspondente
-      const sectionToShow = sections[selectedValue];
-      if (sectionToShow) {
-        document.getElementById(sectionToShow).classList.add('visivel');
-      }
-      
-      // Chamada de função condicional para produtos
-      if (selectedValue === 'REPESCAGEM') {
-        busca_produto(true);
-      } else {
-        busca_produto();
-      }
-
-      // Atualiza o step de visualização conforme a etapa selecionada
-      if (selectedValue === 'PROSPECÇÃO') {
-        showStep(10);
-      } else if (selectedValue === 'NEGOCIAÇÃO') {
-        showStep(15);
-      } else if (selectedValue === 'EXECUÇÃO') {
-        showStep(21);
-      } else if (selectedValue === 'REPESCAGEM') {
-        showStep(25);
-      }
-    }
-
-    // Adiciona o event listener para cada select de etapa
-    SelectsDeEtapa.forEach(selectElem => {
-      selectElem.addEventListener('input', handleEtapaChange);
-    });
-
-    // Função para ajustar o grid de etapas conforme o tamanho da tela
-    function tamanhoPagina() {
-      const viewportWidth = window.innerWidth;
-      const sidebarPercentage = Math.round((150 / viewportWidth) * 100);
-      const conteudoPercentage = 100 - sidebarPercentage;
-      etapas.forEach(etapa => {
-        etapa.style.gridTemplateColumns = `${sidebarPercentage}vw ${conteudoPercentage}vw`;
-      });
-    }
-    window.addEventListener('resize', tamanhoPagina);
-
-    // Função fetchProductData com uso de createElement para atualizar selects
-    async function fetchProductData(productNumber, etapa) {
-        // Verifica token de autenticação (exemplo)
-        const isAuthenticated = true;
-        const isAuthenticatedExpiration = localStorage.getItem('isAuthenticatedExpiration');
-        if (!isAuthenticated || (isAuthenticatedExpiration && Date.now() >= parseInt(isAuthenticatedExpiration))) {
-            window.location.href = '/login.html';
-            return;
-        }
-        
-        // Ajusta a altura do body se necessário
-        function adjustBodyHeight() {
-            if (document.body.clientHeight <= 300) {
-            document.body.style.height = '530px';
-            } else {
-            document.body.style.width = '100vw';
-            }
-        }
-        window.addEventListener('resize', adjustBodyHeight);
-
-        
-
-      // Exemplo de manipulação de mapa (se aplicável)
-        const myNewHeaders = new Headers();
-        myNewHeaders.append("Accept", "application/json");
-        myNewHeaders.append("Cookie", "__cf_bm=53xTQMNzJON7e57.ajQe4QtpGRX8qhWEI294.g0i19U-1705091606-1-AXDZgBWC0wYYJTVs/2CoTc873goN1Q9Br1gyIMJtAag5Qq9YT2faO8X/lgOhW96NiV5sVrGScT4PwMpQIA8ka4M=");
-        
-        var NewrequestOptions = {
-        method: 'GET',
-        headers: myNewHeaders,
-        redirect: 'follow'
-        };
-        
-        try {
-        const response = await fetch(`https://api.pipedrive.com/v1/products/${productNumber}?api_token=6c7d502747be67acc199b483803a28a0c9b95c09`, NewrequestOptions);
-        const responseData = await response.json();
-        const mapaResponse = await fetch('https://weriqui.github.io/extencaoscript/mapa.json');
-        if (!mapaResponse.ok) {
-            throw new Error('Falha ao obter o mapa');
-        }
-        const mapaData = await mapaResponse.json();
-        const mapa = mapaData;
-      
-        const limpar = Object.values(mapa);
-        for (let i = 0; i < limpar.length; i++) {
-            const element = document.getElementById(limpar[i]);
-            if(element){
-            element.innerHTML = ''
-            }
-        }
-        Object.entries(mapa).forEach(([key, value]) => {
-            const scriptText = responseData.data[key];
-            if (scriptText) {
-            const formattedText = scriptText.replace(/\n\n/g, '\n').replace(/\n/g, '<br><br>').replace(/XXXXXXXXXX/g,'<strong>XXXXXXXXXX</strong>').replace(/XXXXXXXXX/g,'<strong>XXXXXXXXX</strong>').replace(/XXXXXXXX/g,'<strong>XXXXXXXX</strong>').replace(/XXXXXXX/g,'<strong>XXXXXXX</strong>').replace(/XXXXXX/g,'<strong>XXXXXX</strong>').replace(/XXXXX/g,'<strong>XXXXX</strong>').replace(/XXXX/g,'<strong>XXXX</strong>').replace(/XXX/g,'<strong>XXX</strong>');
-            const element = document.getElementById(value);
-            if (element) {
-                element.innerHTML = formattedText;
-            }
-            }
-        });
-      
-        for (let i = 1; i <= totalSteps; i++) {
-            const stepEl = document.getElementById('step' + i);
-            if (stepEl) {
-            stepEl.addEventListener('click', () => showStep(i));
-            }
-        }
-      
-        showStep(etapa);
-          
-        } catch (error) {
-            console.log('error', error);
-        }
-        // Adiciona a lógica para bind de eventos aos steps
-        for (let i = 1; i <= totalSteps; i++) {
-            const stepEl = document.getElementById('step' + i);
-            if (stepEl) {
-            stepEl.addEventListener('click', () => showStep(i));
-            }
-        }
-        showStep(etapa);
-    }
-    fetchProductData(produto[0].value, 10);
-
-    // Atualiza quando algum select de produto tem input
-    produto.forEach(produto_clicado => {
-      produto_clicado.addEventListener('input', function(event){
-        const numero_produto = event.currentTarget.value;
-        fetchProductData(numero_produto, parseInt(document.querySelectorAll('.step-content:not(.hidden)')[0].id.split('-')[1]));
-      });
-    });
-
-    handleEtapaChange(document.querySelector('#etapa-funil'));
-    tamanhoPagina();
-  })();
-
-  // Bloco de copy para parágrafos com class "red"
-  (function() {
-    const redParagraphs = document.querySelectorAll('p.red');
-    redParagraphs.forEach(p => {
-      p.addEventListener('click', function() {
-        let confirmation = p.querySelector('.copy-confirmation');
-        if (!confirmation) {
-          confirmation = document.createElement('span');
-          confirmation.classList.add('copy-confirmation');
-          confirmation.textContent = 'Copiado!';
-          p.appendChild(confirmation);
-        }
-        let textToCopy = p.innerHTML
-          .replace(/<br>/g, '\n')
-          .replace(/<[^>]*>/g, '')
-          .replace('Copiado!', '')
-          .replace(/<strong>/g, '')
-          .replace(/<\/strong>/g, '');
-        navigator.clipboard.writeText(textToCopy)
-          .then(() => {
-            confirmation.classList.add('show-confirmation');
-            setTimeout(() => {
-              confirmation.classList.remove('show-confirmation');
-            }, 2000);
-          })
-          .catch(err => {
-            console.error('Erro ao copiar texto:', err);
-          });
-      });
-    });
-  })();
-
-  // Modal para consulta de telefone e transferência de negócio
-  (function() {
-    document.querySelector("#consulta_telefone").addEventListener('click', function(){
-      let numero = document.querySelector("#pesquisa_telefone").value;
-      pesquisaTelefone(numero);
-      if (document.querySelector("#Agente").value === '') {
-        const modal = document.querySelector('dialog');
-        modal.innerHTML = '<h1>Selecione o Assessor</h1> <button>OK</button>';
-        const buttonClose = modal.querySelector("button");
-        buttonClose.onclick = function () {
-          modal.close();
-          modal.innerHTML = '';
-        }
-        modal.showModal();
-      }
-      document.querySelector("#transfere_negocio")
-        .addEventListener('click', converter_lead_em_negocio);
-    });
-  })();
-
-});
 
 // Definir o total de steps
 const totalSteps = 50;
@@ -900,5 +673,235 @@ const mapa_par_pj = {
 
 
 document.addEventListener('DOMContentLoaded', async function() {
-  showStep(1)
+  waitForElement(".produto", (element) => {
+    console.log('Elemento encontrado:', element);
+
+    (async function initApp() {
+      // Funções de busca e manipulação:
+      await busca_produto();
+      await busca_usuarios();
+
+      const produto = document.querySelectorAll('.produto');
+      const SelectsDeEtapa = document.querySelectorAll('#etapa-funil');
+      const etapas = document.querySelectorAll('.etapa');
+      const sections = {
+        'PROSPECÇÃO': 'prospect',
+        'NEGOCIAÇÃO': 'deal',
+        'EXECUÇÃO': 'execut',
+        'REPESCAGEM': 'repesca'
+      };
+
+      // Função para tratar a mudança da etapa
+      function handleEtapaChange(etapaSelect) {
+        // Caso o evento seja de input, obtenha o currentTarget
+        if (etapaSelect instanceof Event) {
+          etapaSelect = etapaSelect.currentTarget;
+        }
+        // Esconde todas as seções
+        Object.values(sections).forEach(sectionId => {
+          const section = document.getElementById(sectionId);
+          if (section) section.classList.remove('visivel');
+        });
+
+        // Obtém o valor selecionado e o valor do produto no mesmo pai
+        const selectedValue = etapaSelect.value;
+        const valorProduto = etapaSelect.parentElement.querySelector('.produto').value;
+        SelectsDeEtapa.forEach(selectElem => {
+          selectElem.value = selectedValue;
+          selectElem.parentElement.querySelector('.produto').value = valorProduto;
+        });
+
+        // Mostra a seção correspondente
+        const sectionToShow = sections[selectedValue];
+        if (sectionToShow) {
+          document.getElementById(sectionToShow).classList.add('visivel');
+        }
+        
+        // Chamada de função condicional para produtos
+        if (selectedValue === 'REPESCAGEM') {
+          busca_produto(true);
+        } else {
+          busca_produto();
+        }
+
+        // Atualiza o step de visualização conforme a etapa selecionada
+        if (selectedValue === 'PROSPECÇÃO') {
+          showStep(10);
+        } else if (selectedValue === 'NEGOCIAÇÃO') {
+          showStep(15);
+        } else if (selectedValue === 'EXECUÇÃO') {
+          showStep(21);
+        } else if (selectedValue === 'REPESCAGEM') {
+          showStep(25);
+        }
+      }
+
+      // Adiciona o event listener para cada select de etapa
+      SelectsDeEtapa.forEach(selectElem => {
+        selectElem.addEventListener('input', handleEtapaChange);
+      });
+
+      // Função para ajustar o grid de etapas conforme o tamanho da tela
+      function tamanhoPagina() {
+        const viewportWidth = window.innerWidth;
+        const sidebarPercentage = Math.round((150 / viewportWidth) * 100);
+        const conteudoPercentage = 100 - sidebarPercentage;
+        etapas.forEach(etapa => {
+          etapa.style.gridTemplateColumns = `${sidebarPercentage}vw ${conteudoPercentage}vw`;
+        });
+      }
+      window.addEventListener('resize', tamanhoPagina);
+
+      // Função fetchProductData com uso de createElement para atualizar selects
+      async function fetchProductData(productNumber, etapa) {
+          // Verifica token de autenticação (exemplo)
+          const isAuthenticated = true;
+          const isAuthenticatedExpiration = localStorage.getItem('isAuthenticatedExpiration');
+          if (!isAuthenticated || (isAuthenticatedExpiration && Date.now() >= parseInt(isAuthenticatedExpiration))) {
+              window.location.href = '/login.html';
+              return;
+          }
+          
+          // Ajusta a altura do body se necessário
+          function adjustBodyHeight() {
+              if (document.body.clientHeight <= 300) {
+              document.body.style.height = '530px';
+              } else {
+              document.body.style.width = '100vw';
+              }
+          }
+          window.addEventListener('resize', adjustBodyHeight);
+
+          
+
+        // Exemplo de manipulação de mapa (se aplicável)
+          const myNewHeaders = new Headers();
+          myNewHeaders.append("Accept", "application/json");
+          myNewHeaders.append("Cookie", "__cf_bm=53xTQMNzJON7e57.ajQe4QtpGRX8qhWEI294.g0i19U-1705091606-1-AXDZgBWC0wYYJTVs/2CoTc873goN1Q9Br1gyIMJtAag5Qq9YT2faO8X/lgOhW96NiV5sVrGScT4PwMpQIA8ka4M=");
+          
+          var NewrequestOptions = {
+          method: 'GET',
+          headers: myNewHeaders,
+          redirect: 'follow'
+          };
+          
+          try {
+          const response = await fetch(`https://api.pipedrive.com/v1/products/${productNumber}?api_token=6c7d502747be67acc199b483803a28a0c9b95c09`, NewrequestOptions);
+          const responseData = await response.json();
+          const mapaResponse = await fetch('https://weriqui.github.io/extencaoscript/mapa.json');
+          if (!mapaResponse.ok) {
+              throw new Error('Falha ao obter o mapa');
+          }
+          const mapaData = await mapaResponse.json();
+          const mapa = mapaData;
+        
+          const limpar = Object.values(mapa);
+          for (let i = 0; i < limpar.length; i++) {
+              const element = document.getElementById(limpar[i]);
+              if(element){
+              element.innerHTML = ''
+              }
+          }
+          Object.entries(mapa).forEach(([key, value]) => {
+              const scriptText = responseData.data[key];
+              if (scriptText) {
+              const formattedText = scriptText.replace(/\n\n/g, '\n').replace(/\n/g, '<br><br>').replace(/XXXXXXXXXX/g,'<strong>XXXXXXXXXX</strong>').replace(/XXXXXXXXX/g,'<strong>XXXXXXXXX</strong>').replace(/XXXXXXXX/g,'<strong>XXXXXXXX</strong>').replace(/XXXXXXX/g,'<strong>XXXXXXX</strong>').replace(/XXXXXX/g,'<strong>XXXXXX</strong>').replace(/XXXXX/g,'<strong>XXXXX</strong>').replace(/XXXX/g,'<strong>XXXX</strong>').replace(/XXX/g,'<strong>XXX</strong>');
+              const element = document.getElementById(value);
+              if (element) {
+                  element.innerHTML = formattedText;
+              }
+              }
+          });
+        
+          for (let i = 1; i <= totalSteps; i++) {
+              const stepEl = document.getElementById('step' + i);
+              if (stepEl) {
+              stepEl.addEventListener('click', () => showStep(i));
+              }
+          }
+        
+          showStep(etapa);
+            
+          } catch (error) {
+              console.log('error', error);
+          }
+          // Adiciona a lógica para bind de eventos aos steps
+          for (let i = 1; i <= totalSteps; i++) {
+              const stepEl = document.getElementById('step' + i);
+              if (stepEl) {
+              stepEl.addEventListener('click', () => showStep(i));
+              }
+          }
+          showStep(etapa);
+      }
+      fetchProductData(document.querySelectorAll('.produto option')[1].value, 1)
+      .then(()=>{
+        document.querySelectorAll('.produto option')[1].selected = true
+      })
+      ;
+      // Atualiza quando algum select de produto tem input
+      produto.forEach(produto_clicado => {
+        produto_clicado.addEventListener('input', function(event){
+          const numero_produto = event.currentTarget.value;
+          fetchProductData(numero_produto, parseInt(document.querySelectorAll('.step-content:not(.hidden)')[0].id.split('-')[1]));
+        });
+      });
+      d
+      handleEtapaChange(document.querySelector('#etapa-funil'));
+      tamanhoPagina();
+    })();
+
+    // Bloco de copy para parágrafos com class "red"
+    (function() {
+      const redParagraphs = document.querySelectorAll('p.red');
+      redParagraphs.forEach(p => {
+        p.addEventListener('click', function() {
+          let confirmation = p.querySelector('.copy-confirmation');
+          if (!confirmation) {
+            confirmation = document.createElement('span');
+            confirmation.classList.add('copy-confirmation');
+            confirmation.textContent = 'Copiado!';
+            p.appendChild(confirmation);
+          }
+          let textToCopy = p.innerHTML
+            .replace(/<br>/g, '\n')
+            .replace(/<[^>]*>/g, '')
+            .replace('Copiado!', '')
+            .replace(/<strong>/g, '')
+            .replace(/<\/strong>/g, '');
+          navigator.clipboard.writeText(textToCopy)
+            .then(() => {
+              confirmation.classList.add('show-confirmation');
+              setTimeout(() => {
+                confirmation.classList.remove('show-confirmation');
+              }, 2000);
+            })
+            .catch(err => {
+              console.error('Erro ao copiar texto:', err);
+            });
+        });
+      });
+    })();
+
+    // Modal para consulta de telefone e transferência de negócio
+    (function() {
+      document.querySelector("#consulta_telefone").addEventListener('click', function(){
+        let numero = document.querySelector("#pesquisa_telefone").value;
+        pesquisaTelefone(numero);
+        if (document.querySelector("#Agente").value === '') {
+          const modal = document.querySelector('dialog');
+          modal.innerHTML = '<h1>Selecione o Assessor</h1> <button>OK</button>';
+          const buttonClose = modal.querySelector("button");
+          buttonClose.onclick = function () {
+            modal.close();
+            modal.innerHTML = '';
+          }
+          modal.showModal();
+        }
+        document.querySelector("#transfere_negocio")
+          .addEventListener('click', converter_lead_em_negocio);
+      });
+    })();
+
+  });
 })

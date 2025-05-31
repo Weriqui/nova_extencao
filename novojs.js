@@ -476,7 +476,7 @@ async function buscar_o_lead(org_name, id_pessoa) {
 }
 
 async function pesquisaTelefone(telefone) {
-  const apiToken = "6c7d502747be67acc199b483803a28a0c9b95c09";
+  const apiToken = "049fc9691e98bcb47e9815bc5c54be0486c289de";
   const myHeaders = new Headers();
   myHeaders.append("Accept", "application/json");
   

@@ -65,7 +65,8 @@
             // 5c) Chamar resize no SDK para que o Pipedrive ajuste o tamanho real da janela flutuante
             try {
               await sdk.execute(window.AppExtensionsSDK.Command.RESIZE, {
-                width: newWidth
+                width: newWidth,
+                height: initialHeight
               });
             } catch (resizeErr) {
               console.error("Falha ao redimensionar modal no Pipedrive:", resizeErr);

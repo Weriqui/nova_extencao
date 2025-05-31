@@ -897,3 +897,8 @@ const mapa_par_pj = {
   "VALORCONSOLIDADO":"VALOR_CONSOLIDADO",
   "VALORDOPRINCIPAL":"VALOR_PINCIPAL"
 };
+
+
+document.addEventListener('DOMContentLoaded', async function() {
+  showStep(1)
+})

@@ -3,6 +3,67 @@
 <head>
   <meta charset="UTF-8">
   <title>Cadência de Prospecção</title>
+  <script src="https://cdn.jsdelivr.net/npm/@pipedrive/app-extensions-sdk@0/dist/index.umd.js"></script>
+  <script>
+    (async () => {
+      // 2) Extrair parâmetros da URL
+      const query = new URLSearchParams(window.location.search);
+      const identifier = query.get("id");
+      const userId = query.get("userId");
+      const companyId = query.get("companyId");
+      const jwtToken = query.get("token");
+      // (você ainda pode ler resource, view, selectedIds, theme, etc. aqui)
+
+      if (!identifier) {
+        console.error("SDK não inicializou porque faltou `id` na URL");
+        return;
+      }
+
+      // 3) Inicializar o SDK dentro do iframe
+      const sdk = new window.AppExtensionsSDK({ identifier });
+      try {
+        // Ajuste inicial de tamanho (padrão)
+        const initialWidth = 800;
+        const initialHeight = 600;
+        await sdk.initialize({ size: { width: initialWidth, height: initialHeight } });
+
+        // 4) Exibe no console para debug
+        console.log("SDK inicializado com sucesso:", { userId, companyId, jwtToken });
+
+        // 5) Ao carregar o HTML, configure o slider para invocar resize
+        window.addEventListener("DOMContentLoaded", () => {
+          const slider = document.getElementById("width-slider");
+          const widthValueLabel = document.getElementById("width-value");
+
+          // Define valor inicial no slider
+          slider.value = initialWidth;
+          widthValueLabel.textContent = initialWidth + "px";
+
+          // Sempre que o slider mudar, chama SDK.RESIZE
+          slider.addEventListener("input", async (event) => {
+            const newWidth = Number(event.target.value);
+            const container = document.getElementById("content-container");
+            const currentHeight = container.offsetHeight;
+
+            // Atualiza label visual
+            widthValueLabel.textContent = newWidth + "px";
+
+            try {
+              // Executa o comando de redimensionar no Pipedrive
+              await sdk.execute(sdk.Command.RESIZE, {
+                width: newWidth,
+                height: currentHeight,
+              });
+            } catch (resizeErr) {
+              console.error("Falha ao redimensionar modal:", resizeErr);
+            }
+          });
+        });
+      } catch (err) {
+        console.error("Falha ao inicializar SDK:", err);
+      }
+    })();
+  </script>
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Seus scripts -->
@@ -20,6 +81,17 @@
     [grid-template-areas:'sidebar_topbar''sidebar_main']
   "
 >
+  <div id="toolbar">
+    <label for="width-slider">Ajustar Largura:</label>
+    <input
+      type="range"
+      id="width-slider"
+      min="300"
+      max="1000"
+      step="10"
+    />
+    <span id="width-value"></span>
+  </div>
   <!-- Sidebar -->
   <aside class="[grid-area:sidebar] bg-[#0F2747] text-white w-64 flex flex-col">
     <!-- Logo topo -->

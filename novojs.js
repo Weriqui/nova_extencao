@@ -231,7 +231,7 @@ async function arquiva(id) {
   let raw = JSON.stringify({ "is_archived": true });
   let requestOptions = { method: 'PATCH', headers: myHeaders, body: raw, redirect: 'follow' };
   
-  fetch(`https://api.pipedrive.com/v1/leads/${id}?api_token=6c7d502747be67acc199b483803a28a0c9b95c09`, requestOptions)
+  fetch(`https://api.pipedrive.com/v1/leads/${id}?api_token=049fc9691e98bcb47e9815bc5c54be0486c289de`, requestOptions)
     .then(response => response.text())
     .then(result => console.log(result))
     .catch(error => console.log('error', error));
@@ -244,7 +244,7 @@ async function pesquisar_leads(id) {
   
   let requestOptions = { method: 'GET', headers: myHeaders, redirect: 'follow' };
   
-  const response = await fetch(`https://api.pipedrive.com/v1/leads/${id}?api_token=6c7d502747be67acc199b483803a28a0c9b95c09`, requestOptions);
+  const response = await fetch(`https://api.pipedrive.com/v1/leads/${id}?api_token=049fc9691e98bcb47e9815bc5c54be0486c289de`, requestOptions);
   const result = await response.json();
   return result.data;
 }
@@ -293,7 +293,7 @@ async function buscar_e_arquivar_leads(org_name) {
   
   let requestOptions = { method: 'GET', headers: myHeaders, redirect: 'follow' };
   
-  const response = await fetch(`https://api.pipedrive.com/v1/leads/search?term=${org_name}&exact_match=1&api_token=6c7d502747be67acc199b483803a28a0c9b95c09`, requestOptions);
+  const response = await fetch(`https://api.pipedrive.com/v1/leads/search?term=${org_name}&exact_match=1&api_token=049fc9691e98bcb47e9815bc5c54be0486c289de`, requestOptions);
   const result = await response.json();
   console.log(result);
   const bl = await envia_python(result);
@@ -311,7 +311,7 @@ async function deletar_lead(id) {
   
   let requestOptions = { method: 'DELETE', headers: myHeaders, redirect: 'follow' };
   
-  const reponse = await fetch(`https://api.pipedrive.com/v1/leads/${id}?api_token=6c7d502747be67acc199b483803a28a0c9b95c09`, requestOptions);
+  const reponse = await fetch(`https://api.pipedrive.com/v1/leads/${id}?api_token=049fc9691e98bcb47e9815bc5c54be0486c289de`, requestOptions);
   return reponse.status;
 }
 
@@ -389,7 +389,7 @@ async function criarNegocio(id, user_id) {
     redirect: 'follow'
   };
   
-  const response = await fetch("https://api.pipedrive.com/v1/deals?api_token=6c7d502747be67acc199b483803a28a0c9b95c09", requestOptions);
+  const response = await fetch("https://api.pipedrive.com/v1/deals?api_token=049fc9691e98bcb47e9815bc5c54be0486c289de", requestOptions);
   return response.status;
 }
 
@@ -399,7 +399,7 @@ async function buscar_e_arquivar_leads(org_name) {
   
   const requestOptions = { method: 'GET', headers: myHeaders, redirect: 'follow' };
   
-  const response = await fetch(`https://api.pipedrive.com/v1/leads/search?term=${org_name}&exact_match=1&api_token=6c7d502747be67acc199b483803a28a0c9b95c09`, requestOptions);
+  const response = await fetch(`https://api.pipedrive.com/v1/leads/search?term=${org_name}&exact_match=1&api_token=049fc9691e98bcb47e9815bc5c54be0486c289de`, requestOptions);
   const result = await response.json();
   console.log(result);
   const bl = await envia_python(result);
@@ -417,7 +417,7 @@ async function deletar_lead(id) {
   
   const requestOptions = { method: 'DELETE', headers: myHeaders, redirect: 'follow' };
   
-  const reponse = await fetch(`https://api.pipedrive.com/v1/leads/${id}?api_token=6c7d502747be67acc199b483803a28a0c9b95c09`, requestOptions);
+  const reponse = await fetch(`https://api.pipedrive.com/v1/leads/${id}?api_token=049fc9691e98bcb47e9815bc5c54be0486c289de`, requestOptions);
   return reponse.status;
 }
 
@@ -465,7 +465,7 @@ async function buscar_o_lead(org_name, id_pessoa) {
   
   const requestOptions = { method: 'GET', headers: myHeaders, redirect: 'follow' };
   
-  const response = await fetch(`https://api.pipedrive.com/v1/leads/search?term=${org_name}&person_id=${id_pessoa}&api_token=6c7d502747be67acc199b483803a28a0c9b95c09`, requestOptions);
+  const response = await fetch(`https://api.pipedrive.com/v1/leads/search?term=${org_name}&person_id=${id_pessoa}&api_token=049fc9691e98bcb47e9815bc5c54be0486c289de`, requestOptions);
   const result = await response.json();
   if (result.data.items.length === 0) {
     return 0;
@@ -543,7 +543,7 @@ async function pesquisa_telefone(id) {
   
   const requestOptions = { method: 'GET', headers: myHeaders, redirect: 'follow' };
   
-  const response = await fetch(`https://api.pipedrive.com/v1/persons/${id}?api_token=6c7d502747be67acc199b483803a28a0c9b95c09`, requestOptions);
+  const response = await fetch(`https://api.pipedrive.com/v1/persons/${id}?api_token=049fc9691e98bcb47e9815bc5c54be0486c289de`, requestOptions);
   const saida = await response.json();
   return saida.data.phone[0].value;
 }
@@ -592,7 +592,7 @@ async function busca_usuarios() {
   
   const requestOptions = { method: 'GET', headers: myHeaders, redirect: 'follow' };
   
-  const response = await fetch("https://api.pipedrive.com/v1/users?api_token=6c7d502747be67acc199b483803a28a0c9b95c09", requestOptions);
+  const response = await fetch("https://api.pipedrive.com/v1/users?api_token=049fc9691e98bcb47e9815bc5c54be0486c289de", requestOptions);
   const result = await response.json();
   const data = result.data;
   let option = '<option value="">Selecione</option>\n ';
@@ -621,7 +621,7 @@ async function busca_produto(tipo_produto=false){
   } else {
     filtro_especifico=109
   }
-  const response = await fetch(`https://api.pipedrive.com/v1/products?filter_id=${filtro_especifico}&api_token=6c7d502747be67acc199b483803a28a0c9b95c09`);
+  const response = await fetch(`https://api.pipedrive.com/v1/products?filter_id=${filtro_especifico}&api_token=049fc9691e98bcb47e9815bc5c54be0486c289de`);
   const result = await response.json();
 
   // result.data é um array de produtos
@@ -786,7 +786,7 @@ document.addEventListener('DOMContentLoaded', async function() {
           };
           
           try {
-          const response = await fetch(`https://api.pipedrive.com/v1/products/${productNumber}?api_token=6c7d502747be67acc199b483803a28a0c9b95c09`, NewrequestOptions);
+          const response = await fetch(`https://api.pipedrive.com/v1/products/${productNumber}?api_token=049fc9691e98bcb47e9815bc5c54be0486c289de`, NewrequestOptions);
           const responseData = await response.json();
           const mapaResponse = await fetch('https://weriqui.github.io/extencaoscript/mapa.json');
           if (!mapaResponse.ok) {

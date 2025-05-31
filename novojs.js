@@ -617,9 +617,9 @@ async function busca_produto(tipo_produto=false){
   };
   let filtro_especifico;
   if(tipo_produto){
-    filtro_especifico=2055
+    filtro_especifico=4434
   } else {
-    filtro_especifico=109
+    filtro_especifico=4434
   }
   const response = await fetch(`https://api.pipedrive.com/v1/products?filter_id=${filtro_especifico}&api_token=049fc9691e98bcb47e9815bc5c54be0486c289de`);
   const result = await response.json();

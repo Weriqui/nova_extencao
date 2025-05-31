@@ -24,7 +24,7 @@
       try {
         // Defina um tamanho padrão inicial (ex: 800×600)
         const initialWidth = 1000;
-        const initialHeight = 800;
+        const initialHeight = 700;
         await sdk.initialize({ size: { width: initialWidth, height: initialHeight } });
 
         console.log("SDK inicializado com sucesso:", { userId, companyId, jwtToken });
@@ -100,7 +100,7 @@
     <input
       type="range"
       id="width-slider"
-      min="300"
+      min="200"
       max="800"
       step="10"
     />
@@ -117,7 +117,7 @@
     </div>
 
     <!-- Navegação principal -->
-    <nav class="flex-1 px-4 py-6 overflow-y-auto">
+    <nav class="flex-1 px-4 py-6 overflow-y-auto rounded-lg border border-white pr-[0.00001rem]">
         <h3 class="text-base font-bold uppercase tracking-wide text-white mb-2">
             CADÊNCIA DE PROSPECÇÃO
         </h3>

@@ -23,8 +23,8 @@
       const sdk = new window.AppExtensionsSDK({ identifier });
       try {
         // Defina um tamanho padrão inicial (ex: 800×600)
-        const initialWidth = 800;
-        const initialHeight = 600;
+        const initialWidth = 1000;
+        const initialHeight = 800;
         await sdk.initialize({ size: { width: initialWidth, height: initialHeight } });
 
         console.log("SDK inicializado com sucesso:", { userId, companyId, jwtToken });
@@ -64,7 +64,7 @@
 
             // 5c) Chamar resize no SDK para que o Pipedrive ajuste o tamanho real da janela flutuante
             try {
-              await sdk.execute(sdk.Command.RESIZE, {
+              await sdk.execute(Command.RESIZE, {
                 width: newWidth,
                 height: currentHeight,
               });

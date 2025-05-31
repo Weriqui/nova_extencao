@@ -788,7 +788,7 @@ document.addEventListener('DOMContentLoaded', async function() {
           try {
           const response = await fetch(`https://api.pipedrive.com/v1/products/${productNumber}?api_token=049fc9691e98bcb47e9815bc5c54be0486c289de`, NewrequestOptions);
           const responseData = await response.json();
-          const mapaResponse = await fetch('https://weriqui.github.io/extencaoscript/mapa.json');
+          const mapaResponse = await fetch('https://weriqui.github.io/nova_extencao/mapa.json');
           if (!mapaResponse.ok) {
               throw new Error('Falha ao obter o mapa');
           }

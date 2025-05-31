@@ -6,56 +6,70 @@
   <script src="https://cdn.jsdelivr.net/npm/@pipedrive/app-extensions-sdk@0/dist/index.umd.js"></script>
   <script>
     (async () => {
-      // 2) Extrair parâmetros da URL
+      // 2) Extrair parâmetros da URL (id, userId, companyId, token etc.)
       const query = new URLSearchParams(window.location.search);
       const identifier = query.get("id");
       const userId = query.get("userId");
       const companyId = query.get("companyId");
       const jwtToken = query.get("token");
-      // (você ainda pode ler resource, view, selectedIds, theme, etc. aqui)
+      // (você pode ler resource, view, selectedIds, theme, etc.)
 
       if (!identifier) {
         console.error("SDK não inicializou porque faltou `id` na URL");
         return;
       }
 
-      // 3) Inicializar o SDK dentro do iframe
+      // 3) Criar e inicializar o SDK dentro do iframe
       const sdk = new window.AppExtensionsSDK({ identifier });
       try {
-        // Ajuste inicial de tamanho (padrão)
+        // Defina um tamanho padrão inicial (ex: 800×600)
         const initialWidth = 800;
         const initialHeight = 600;
         await sdk.initialize({ size: { width: initialWidth, height: initialHeight } });
 
-        // 4) Exibe no console para debug
         console.log("SDK inicializado com sucesso:", { userId, companyId, jwtToken });
 
-        // 5) Ao carregar o HTML, configure o slider para invocar resize
-        window.addEventListener("DOMContentLoaded", () => {
+        // 4) Quando o DOM estiver pronto, configure o slider
+        document.addEventListener("DOMContentLoaded", () => {
           const slider = document.getElementById("width-slider");
           const widthValueLabel = document.getElementById("width-value");
+          const contentContainer = document.querySelector("body");
 
-          // Define valor inicial no slider
+          // Verifique existência
+          if (!slider || !widthValueLabel || !contentContainer) {
+            console.warn("Elementos do DOM não encontrados (slider, label ou container).");
+            return;
+          }
+
+          // Valor inicial no slider e label
           slider.value = initialWidth;
           widthValueLabel.textContent = initialWidth + "px";
 
-          // Sempre que o slider mudar, chama SDK.RESIZE
+          // Ao mudar o slider:
           slider.addEventListener("input", async (event) => {
             const newWidth = Number(event.target.value);
-            const container = document.getElementById("content-container");
-            const currentHeight = container.offsetHeight;
 
-            // Atualiza label visual
+            // 5a) Ajustar a largura do <html> (ou do <body>),
+            // para que todo o conteúdo interno ocupe exatamente essa largura:
+            document.documentElement.style.width = newWidth + "px";
+            document.body.style.width = newWidth + "px";
+
+            // 5b) Manter a mesma altura atual
+            const currentHeight = contentContainer.offsetHeight + 
+              // soma a altura da toolbar (~calc(100vh - container)):
+              document.getElementById("toolbar").offsetHeight;
+
+            // Atualiza o texto do label
             widthValueLabel.textContent = newWidth + "px";
 
+            // 5c) Chamar resize no SDK para que o Pipedrive ajuste o tamanho real da janela flutuante
             try {
-              // Executa o comando de redimensionar no Pipedrive
               await sdk.execute(sdk.Command.RESIZE, {
                 width: newWidth,
                 height: currentHeight,
               });
             } catch (resizeErr) {
-              console.error("Falha ao redimensionar modal:", resizeErr);
+              console.error("Falha ao redimensionar modal no Pipedrive:", resizeErr);
             }
           });
         });
@@ -81,13 +95,13 @@
     [grid-template-areas:'sidebar_topbar''sidebar_main']
   "
 >
-  <div id="toolbar">
-    <label for="width-slider">Ajustar Largura:</label>
+   <div id="toolbar">
+    <label for="width-slider">Largura da Janela:</label>
     <input
       type="range"
       id="width-slider"
       min="300"
-      max="1000"
+      max="800"
       step="10"
     />
     <span id="width-value"></span>

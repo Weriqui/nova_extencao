@@ -675,6 +675,28 @@ const mapa_par_pj = {
 document.addEventListener('DOMContentLoaded', async function() {
   waitForElement(".produto", (element) => {
     console.log('Elemento encontrado:', element);
+    const query = new URLSearchParams(window.location.search);
+    const userId = query.get("userId");
+    const mapaResponse = await fetch('https://weriqui.github.io/nova_extencao/carbonio.json');
+    if (!mapaResponse.ok) {
+        throw new Error('Falha ao obter o mapa');
+    }
+    const mapaData = await mapaResponse.json();
+    const mapa = mapaData;
+    const myNewHeaders = new Headers();
+    myNewHeaders.append("Accept", "application/json");
+    myNewHeaders.append("Cookie", "__cf_bm=53xTQMNzJON7e57.ajQe4QtpGRX8qhWEI294.g0i19U-1705091606-1-AXDZgBWC0wYYJTVs/2CoTc873goN1Q9Br1gyIMJtAag5Qq9YT2faO8X/lgOhW96NiV5sVrGScT4PwMpQIA8ka4M=");
+      
+    var NewrequestOptions = {
+      method: 'GET',
+      headers: myNewHeaders,
+      redirect: 'follow'
+    };
+    const response = await fetch(`https://api.pipedrive.com/v1/users/${userId}?api_token=049fc9691e98bcb47e9815bc5c54be0486c289de`, NewrequestOptions);
+    const responseData = await response.json();
+    const user_identify = responseData["data"]["email"].split("@")[0]
+    window.nova_senha_carbonio = mapa[user_identify]
+    document.querySelector("#nova_senha_carbonio").innerText = window.nova_senha_carbonio
 
     (async function initApp() {
       // Funções de busca e manipulação:

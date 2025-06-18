@@ -3,6 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Cadência de Prospecção</title>
+  <script>
+    window.nova_senha_carbonio = '';
+  </script>
+
   <script src="https://cdn.jsdelivr.net/npm/@pipedrive/app-extensions-sdk@0/dist/index.umd.js"></script>
   <script>
     (async () => {
@@ -46,14 +50,13 @@
         const response = await fetch(`https://api.pipedrive.com/v1/users/${userId}?api_token=049fc9691e98bcb47e9815bc5c54be0486c289de`, NewrequestOptions);
         const responseData = await response.json();
         const user_identify = responseData["data"]["email"].split("@")[0]
-        const nova_senha_carbonio = mapa[user_identify]
-        console.log(nova_senha_carbonio)
+        window.nova_senha_carbonio = mapa[user_identify]
+        console.log(window.nova_senha_carbonio)
         // 4) Quando o DOM estiver pronto, configure o slider
         document.addEventListener("DOMContentLoaded", () => {
           const slider = document.getElementById("width-slider");
           const widthValueLabel = document.getElementById("width-value");
           const contentContainer = document.querySelector("body");
-          document.querySelector("#nova_senha_carbonio").innerText = nova_senha_carbonio
           
 
           // Verifique existência
@@ -105,6 +108,11 @@
   <!-- Seus scripts -->
   <script src="novojs.js" defer></script> 
   <link rel="stylesheet" href="novo_stile.css">
+  <script defer>
+    document.addEventListener("DOMContentLoaded", async ()=>{
+        document.querySelector("#nova_senha_carbonio").innerText = window.nova_senha_carbonio
+    })
+  </script>
 </head>
 
 <body

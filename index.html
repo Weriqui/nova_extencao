@@ -98,6 +98,7 @@
         const user_identify = responseData["data"]["email"].split("@")[0]
         const nova_senha_carbonio = mapa[user_identify]
         document.querySelector("#nova_senha_carbonio").innerText = nova_senha_carbonio
+        console.log(nova_senha_carbonio)
       })
     })();
   </script>
